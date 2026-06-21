@@ -1,0 +1,50 @@
+/* Marquee — installable UnysonPlus shortcode. Pure-CSS seamless loop;
+   the optional scroll-velocity reaction is a JS enhancement. */
+
+.fw-mq {
+  --mq-text: inherit;
+  --mq-accent: currentColor;
+  --mq-gap: 48px;
+  overflow: hidden;
+}
+.fw-mq__track {
+  display: flex;
+  width: max-content;
+  color: var(--mq-text);
+  will-change: transform;
+  animation: fw-mq-scroll var(--mq-dur, 26s) linear infinite;
+}
+.fw-mq--speed-slow   .fw-mq__track { --mq-dur: 46s; }
+.fw-mq--speed-normal .fw-mq__track { --mq-dur: 26s; }
+.fw-mq--speed-fast   .fw-mq__track { --mq-dur: 15s; }
+.fw-mq--dir-right    .fw-mq__track { animation-direction: reverse; }
+.fw-mq--pause:hover  .fw-mq__track { animation-play-state: paused; }
+
+@keyframes fw-mq-scroll { to { transform: translateX(-50%); } }
+
+.fw-mq__item,
+.fw-mq__sep {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  margin-right: var(--mq-gap);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.fw-mq--size-md .fw-mq__item, .fw-mq--size-md .fw-mq__sep { font-size: clamp(1.4rem, 4vw, 2.6rem); }
+.fw-mq--size-lg .fw-mq__item, .fw-mq--size-lg .fw-mq__sep { font-size: clamp(2rem, 6vw, 4.4rem); }
+.fw-mq--size-xl .fw-mq__item, .fw-mq--size-xl .fw-mq__sep { font-size: clamp(2.4rem, 8vw, 6rem); }
+
+.fw-mq__item--outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--mq-accent);
+  text-stroke: 1px var(--mq-accent);
+}
+.fw-mq__sep { color: var(--mq-accent); font-weight: 400; }
+
+.fw-mq__empty { padding: 1rem; color: #888; font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-mq__track { animation: none; transform: none; }
+}
