@@ -26,7 +26,7 @@ if ( ! function_exists( 'fw_sc_mq_dir_to_uri' ) ) {
 }
 
 $uri = fw_sc_mq_dir_to_uri( dirname( __FILE__ ) );
-$ver = '1.0.1';
+$ver = '1.0.2';
 
 wp_enqueue_style( 'fw-sc-marquee', $uri . '/static/css/styles.css', array(), $ver );
 // JS only matters for the optional scroll-velocity reaction; load it lazily.

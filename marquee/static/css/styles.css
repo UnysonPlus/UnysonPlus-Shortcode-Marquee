@@ -5,6 +5,8 @@
   --mq-text: inherit;
   --mq-accent: currentColor;
   --mq-gap: 48px;
+  --mq-icon-size: 28px;
+  --mq-img-h: 44px;
   overflow: hidden;
 }
 .fw-mq__track {
@@ -42,6 +44,27 @@
   text-stroke: 1px var(--mq-accent);
 }
 .fw-mq__sep { color: var(--mq-accent); font-weight: 400; }
+
+/* Image + icon items: media-sized, not text-sized. The inner element carries
+   the explicit size so the .fw-mq--size-* text clamp can't win by specificity. */
+.fw-mq__item--image,
+.fw-mq__item--icon { font-weight: 400; letter-spacing: 0; }
+.fw-mq__item--image img {
+  display: block;
+  height: var(--mq-img-h, 44px);
+  width: auto;
+  object-fit: contain;
+}
+.fw-mq__item--icon .fw-mq__icon-font {
+  font-size: var(--mq-icon-size, 28px);
+  line-height: 1;
+}
+.fw-mq__item--icon .fw-mq__icon-img {
+  display: block;
+  height: var(--mq-icon-size, 28px);
+  width: auto;
+  object-fit: contain;
+}
 
 .fw-mq__empty { padding: 1rem; color: #888; font-style: italic; }
 

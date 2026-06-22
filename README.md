@@ -1,9 +1,10 @@
 # Marquee — UnysonPlus shortcode
 
 An add-on element for the [UnysonPlus](https://github.com/UnysonPlus) page
-builder: a horizontally scrolling row of words that loops seamlessly, with
-solid + outline items and an optional reaction to scroll velocity. The loop is
-pure CSS; the velocity reaction is a small vanilla-JS enhancement.
+builder: a horizontally scrolling row that loops seamlessly. Each item can be
+**text** (solid or outline), an **image**, or an **icon**, with an optional
+separator glyph and an optional reaction to scroll velocity. The loop is pure
+CSS; the velocity reaction is a small vanilla-JS enhancement.
 
 This is **not** bundled in core — it installs on demand.
 
@@ -20,9 +21,13 @@ the page builder.
 
 ## Use
 
-Add items (text + solid/outline), pick a direction, speed and gap, and
-optionally turn on *Pause on Hover* / *React to Scroll*. The **Animations** tab
-still applies.
+Add items — each is **Text** (solid/outline), an **Image**, or an **Icon** —
+set a separator glyph, then pick a direction, speed and gap, and optionally turn
+on *Pause on Hover* / *React to Scroll*. Icon size and image height live on the
+**Styling** tab. The **Animations** tab still applies.
+
+Mixing types lets one element do, say, `WORD · [icon] · WORD · [logo]` in a
+single seamless loop.
 
 ## License
 

@@ -16,8 +16,25 @@ $options = array(
 						'type'          => 'addable-popup',
 						'label'         => __( 'Items', 'fw' ),
 						'popup-title'   => __( 'Add / Edit Item', 'fw' ),
-						'template'      => '{{= text || "Item" }}',
+						'template'      => '{{= text || ( kind === "image" ? "Image" : ( kind === "icon" ? "Icon" : "Item" ) ) }}',
 						'popup-options' => array(
+							// Discriminator. New kinds are added here over time; the
+							// renderer falls back to `text` for anything it doesn't
+							// know, so older saves never break. See views/view.php.
+							'kind' => array(
+								'type'    => 'select',
+								'label'   => __( 'Item Type', 'fw' ),
+								'value'   => 'text',
+								'choices' => array(
+									'text'  => __( 'Text', 'fw' ),
+									'image' => __( 'Image', 'fw' ),
+									'icon'  => __( 'Icon', 'fw' ),
+								),
+								'desc'    => __( 'The Text field below is always kept, so switching type never loses what you typed.', 'fw' ),
+							),
+							// STABLE key — primary content for Text items, and the
+							// alt text / aria-label for Image and Icon items. Never
+							// rename or repurpose this.
 							'text' => array(
 								'type'  => 'text',
 								'label' => __( 'Text', 'fw' ),
@@ -25,12 +42,23 @@ $options = array(
 							),
 							'style' => array(
 								'type'    => 'select',
-								'label'   => __( 'Style', 'fw' ),
+								'label'   => __( 'Text Style', 'fw' ),
 								'value'   => 'solid',
 								'choices' => array(
 									'solid'   => __( 'Solid', 'fw' ),
 									'outline' => __( 'Outline', 'fw' ),
 								),
+								'desc'    => __( 'Applies to Text items.', 'fw' ),
+							),
+							'image' => array(
+								'type'  => 'upload',
+								'label' => __( 'Image', 'fw' ),
+								'desc'  => __( 'Shown when Item Type is Image.', 'fw' ),
+							),
+							'icon' => array(
+								'type'  => ( function_exists( 'fw' ) && fw()->backend->option_type( 'icon-v2' ) ) ? 'icon-v2' : 'icon',
+								'label' => __( 'Icon', 'fw' ),
+								'desc'  => __( 'Shown when Item Type is Icon.', 'fw' ),
 							),
 						),
 					),
@@ -124,6 +152,25 @@ $options = array(
 					'text_color'   => function_exists( 'sc_color_field_compact' ) ? sc_color_field_compact( array( 'label' => __( 'Text Color', 'fw' ) ) ) : array( 'type' => 'color-picker', 'label' => __( 'Text Color', 'fw' ), 'value' => '' ),
 					'accent_color' => function_exists( 'sc_color_field_compact' ) ? sc_color_field_compact( array( 'label' => __( 'Outline & Separator Color', 'fw' ) ) ) : array( 'type' => 'color-picker', 'label' => __( 'Outline & Separator Color', 'fw' ), 'value' => '' ),
 					'font_size_preset' => function_exists( 'sc_font_size_field' ) ? sc_font_size_field() : array( 'type' => 'select', 'label' => __( 'Font Size', 'fw' ), 'choices' => array( '' => __( 'Default', 'fw' ) ) ),
+				),
+			),
+			'group_media' => array(
+				'type'    => 'group',
+				'options' => array(
+					'icon_size' => array(
+						'type'       => 'slider',
+						'label'      => __( 'Icon Size (px)', 'fw' ),
+						'value'      => 28,
+						'properties' => array( 'min' => 12, 'max' => 120, 'step' => 1 ),
+						'desc'       => __( 'Applies to Icon items. Icons use the Text Color.', 'fw' ),
+					),
+					'image_height' => array(
+						'type'       => 'slider',
+						'label'      => __( 'Image Height (px)', 'fw' ),
+						'value'      => 44,
+						'properties' => array( 'min' => 16, 'max' => 220, 'step' => 2 ),
+						'desc'       => __( 'Applies to Image items.', 'fw' ),
+					),
 				),
 			),
 			'group_spacings' => array(
